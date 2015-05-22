@@ -1,7 +1,8 @@
 import os
+import sys
 
 mapping = {}
-folder = '/Users/knut/dev/python/notesort/test/'
+folder = os.path.abspath(sys.argv[1])
 
 with open('Instruments.txt') as mapping_file:
     for line in mapping_file:
