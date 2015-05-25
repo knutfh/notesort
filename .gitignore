@@ -1,2 +1,4 @@
-./test
-./test_kopi
+/test
+/test_kopi
+.gitignore
+*.pdf
