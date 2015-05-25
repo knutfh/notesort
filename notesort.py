@@ -1,7 +1,13 @@
-import os
-import sys
+"""
+Invoke with "python notesort.py <path to folder>".
+A list of instrument numbers with corresponding instrument names
+must be available in the root folder of the script.
+"""
 
-FOLDER = os.path.abspath(sys.argv[1])
+# Standard library imports
+import os
+
+FOLDER = './test'
 
 
 def create_instrument_map():
@@ -20,15 +26,27 @@ def rename_files_with_instrument_name(instrument_map):
         root, extension = os.path.splitext(filename)
         if not extension.endswith('.pdf'):
             continue
-        if root in instrument_map:
-            new_file_name = '{prefix}_{instrument_name}{extension}'.format(
-                                prefix=root,
-                                instrument_name=instrument_map[root],
-                                extension=extension)
-            old_path = os.path.join(FOLDER, filename)
-            new_path = os.path.join(FOLDER, new_file_name)
-            os.rename(old_path, new_path)
-            print 'Renamed', filename, '-->', new_file_name
+        try:
+            if root[2]:
+                if root[:2] in instrument_map:
+                    new_file_name = '{prefix}_'\
+                                    '{instrument_name}'\
+                                    '{part_number}'\
+                                    '{extension}'.format(
+                                        prefix=root[:2],
+                                        instrument_name=instrument_map[root[:2]],
+                                        part_number=root[3],
+                                        extension=extension)
+        except:
+            if root in instrument_map:
+                new_file_name = '{prefix}_{instrument_name}{extension}'.format(
+                                    prefix=root,
+                                    instrument_name=instrument_map[root],
+                                    extension=extension)
+        old_path = os.path.join(FOLDER, filename)
+        new_path = os.path.join(FOLDER, new_file_name)
+        os.rename(old_path, new_path)
+        print 'Renamed', filename, '-->', new_file_name
 
 if __name__ == '__main__':
     instrument_map = create_instrument_map()
