@@ -1,7 +1,13 @@
-import os
-import sys
+"""
+Invoke with "python notesort.py <path to folder>".
+A list of instrument numbers with corresponding instrument names
+must be available in the root folder of the script.
+"""
 
-FOLDER = os.path.abspath(sys.argv[1])
+# Standard library imports
+import os
+
+FOLDER = './test'
 
 
 def create_instrument_map():
@@ -22,9 +28,7 @@ def rename_files_with_instrument_name(instrument_map):
             continue
         try:
             if root[2]:
-                part_number = root[3]
-                instrument_number = root[:2]
-                if instrument_number in instrument_map:
+                if root[:2] in instrument_map:
                     new_file_name = '{prefix}_'\
                                     '{instrument_name}'\
                                     '{part_number}'\
